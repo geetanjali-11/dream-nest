@@ -1,0 +1,186 @@
+=> npm i react-router-dom sass @mui/icons-material @emotion/react @emotion/styled
+
+
+- npm i : Short for npm install — it installs one or more packages in your project and saves them in node_modules
+
+Packages you're installing:
+
+1. react-router-dom : 
+            Purpose: For adding routing/navigation in a React app (e.g., switching pages without reloading).
+            Example use: <BrowserRouter>, <Route>, <Link>
+
+2. sass : 
+       Purpose: Allows you to write styles using SASS/SCSS, which is a CSS preprocessor with variables, nesting, etc.
+       Example use: styles.scss with nested CSS.       
+
+3. @mui/icons-material : 
+        Purpose: Provides Material UI icons (e.g., Home icon, Menu icon).
+        You use them like this:
+                       import HomeIcon from '@mui/icons-material/Home';
+
+4. @emotion/react : 
+
+5. @emotion/styled : 
+        Purpose: These are styling libraries used by Material UI (MUI) for custom styles.
+        @emotion/react: Enables CSS-in-JS styling.
+        @emotion/styled: Lets you create styled components.
+
+6. npm i -g nodemon : 
+           (1)npm : Stands for Node Package Manager
+               - Is used to install packages/libraries/modules in Node.js projects
+
+           (2)-g : Means global install
+                - Means this package will be availabe to whole system, it's not limited to one project
+                - we can run nodemon anywhere inside terminal
+          
+           (3)nodemon : 
+                -This is an utility which auto-restarts the Node.js server whenever changes are made in the code
+                -Useful for backend development, especially with Express.js
+                -How to use :
+                     nodemon filename.js
+
+
+
+7. npm i express body-parser bcryptjs cors dotenv multer-gridfs-storage jsonwebtoken mongoose
+       - This is used to install every required essential Node.js packages at once for backend
+         
+         (1) express 
+             - Most popular Node.js web framework
+             - whole backend's server will run on this only
+             - Let's you easily create APIs and route requests
+
+             Syntax : 
+                   const express = require('express');
+                   const app = express();
+
+
+         (2) body-parser 
+               - To parse(resolve/divide any sentence or something into parts) the body of request
+               - Useful when we send JSON or form data from backend 
+               Syntax : 
+                    app.use(bodyParser.json());
+
+         (3) bcryptjs 
+               - To hash passwords (for security)
+               -Plain password is converted into hash so that it's secure in the database
+               Syntax :
+                     const bcrypt = require('bcryptjs');
+                     const hashedPassword = bcrypt.hashSync(password, 10);
+
+          (4) cors (Cross-Origin Resource Sharing)
+                -  If frontend and backend is on different domain/ports (like react on 3000, and Node on 5000)
+                - CORS allows frontend to connect safely to backend to communicate
+                Syntax :
+                     const cors = require('cors');
+                     app.use(cors());
+
+           (5) dotenv    
+                  - To store environment variables (like DB_URI, SECRET_KEY)
+                  - Handles sensitive data in a secure way
+
+                  .env file : 
+                         PORT=5000
+                         MONGO_URI=mongodb+srv://...             
+
+                         require('dotenv').config();
+
+            (6) multer-gridfs-storage
+                    - To store file uploads (e.g., images, documents) in mongodb
+                    - Specially for GridFS (file storage system of MongoDB)  
+
+                    Syntax : const multer = require('multer-gridfs-storage');
+
+             (7) jsonwebtoken 
+                   - used to generate JWL tokens (for login/ authentication)
+                   - Tokens are used to access secure route
+
+                   Syntax : 
+                   const jwt = require('jsonwebtoken');
+                   const token = jwt.sign({ id: user._id }, SECRET_KEY);
+
+             (8) mongoose 
+                   - Used to interact with MongoDB easily
+                   - This is a ODM (Object Data Modeling) library
+
+                   Syntax :
+                         const mongoose = require('mongoose');
+                         mongoose.connect(process.env.MONGO_URI);
+
+
+
+                     🔍 Summary Table:
+                     
+          (1) Package	=>       Kaam
+          (2) express	=>       Backend server create karna
+          (3) body-parser =>      Request body ko parse karna
+          (4) bcryptjs	=>       Password hash karna
+          (5) cors	     =>       Frontend-backend communication allow karna
+          (6) dotenv	=>       Secrets/env variables manage karna
+          (7) multer-gridfs-storage=> MongoDB ke GridFS me files store karna
+          (8) jsonwebtoken=>  JWT token banake authentication handle karna
+          (9) mongoose	=>       MongoDB ke saath easy tarike se kaam karna (query, save, schema etc.)
+
+     
+
+                               
+
+8.  npm i react-redux @redusjs/toolkit redux-persist :
+
+    /*  are used together to manage state in your React app 
+      — especially in medium to large projects. */
+        
+       => State : The data that your app uses and changes (like user info
+                theme, login, status, etc)
+
+     (1) react-redux :
+          - Think of it as a bridge between your React app and redux (which is a state
+              manager.)
+
+          - Lets your react components talk to redux
+          - helps you get or update data (called 'state') from the central store.
+
+          ex :
+                import { useSelector, useDispatch } from "react-redux";
+
+
+    /* Without react-redux, React and Redux can’t connect. */
+
+
+      (2) @reduxjs/toolkit : 
+            - This is the official, modern way to use Redux
+            - Makes Redux easier to use (Redux used to be difiicult 
+              before this)
+            - Reduces code, handles setup for you 
+
+            -Comes with features like : 
+                  (a) createSlice() : Makes your reducers + action quickly
+                  (b) configureStore() : Helps set up the store in 1 line
+                  (c) createAsyncThunk() : for calling APIs (like login , register, etc)
+
+                  Exampls : 
+                     import {configureStore, createSlice } from '@reduxjs/toolkit'
+
+       (3) redux-persist 
+            - Keeps your data safe even after page refresh
+            - By default, Redux store resets when you refresh the page
+            - redux-persist saves data like user login, cart, theme, etc in localStorage
+
+            Example : 
+                 persistReducer(persistConfig, rootReducer); 
+ 
+  Imagine this:
+      ❤️ User logs in → App stores user data in Redux.
+
+      ❤️ Page refreshes → Redux data is gone 😭
+
+      ❤️ But with redux-persist, it reloads from storage automatically 😎
+
+Example Where You’ll Use All 3:
+   -If you’re building an app with:
+
+      (1) Login/Register
+      (2) Shopping Cart
+      (3) Theme (dark/light) toggle
+      (4) User Profile
+
+Then these 3 help manage and preserve that data across your app easily.

@@ -1,0 +1,6 @@
+SCSS : Sassy Css - basically a advance version of CSS that provides extra features
+
+ SCSS is like CSS with superpowers:
+   DRY (Don’t Repeat Yourself)
+   Cleaner, more structured code
+   More maintainable in large projects

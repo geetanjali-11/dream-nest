@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: dream-nest-api
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm ci
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGO_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CLIENT_URL
+        sync: false

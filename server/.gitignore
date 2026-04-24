@@ -1,0 +1,15 @@
+# dependencies
+node_modules/
+
+# environment variables
+.env
+
+# logs
+*.log
+
+# OS
+.DS_Store
+
+# legacy local uploads
+public/uploads/
+
