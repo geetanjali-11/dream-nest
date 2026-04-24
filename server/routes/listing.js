@@ -5,6 +5,11 @@ const User = require("../models/User");
 const { requireAuth } = require("../middleware/auth");
 const { saveUpload, upload } = require("../utils/uploads");
 
+const creatorPopulate = {
+  path: "creator",
+  select: "-password",
+};
+
 /* CREATING LISTING */
 router.post("/create", requireAuth, upload.array("listingPhotos"), async (req, res) => {
   try {
@@ -85,9 +90,9 @@ router.get("/", async (req, res) => {
   try {
     let listings;
     if (qCategory) {
-      listings = await Listing.find({ category: qCategory }).populate("creator");
+      listings = await Listing.find({ category: qCategory }).populate(creatorPopulate);
     } else {
-      listings = await Listing.find().populate("creator");
+      listings = await Listing.find().populate(creatorPopulate);
     }
 
     res.status(200).json(listings);
@@ -107,14 +112,14 @@ router.get("/search/:search", async (req, res) => {
     let listings = [];
 
     if (search === "all") {
-      listings = await Listing.find().populate("creator");
+      listings = await Listing.find().populate(creatorPopulate);
     } else {
       listings = await Listing.find({
         $or: [
           { category: { $regex: search, $options: "i" } },
           { title: { $regex: search, $options: "i" } },
         ],
-      }).populate("creator");
+      }).populate(creatorPopulate);
     }
     res.status(200).json(listings);
   } catch (err) {
@@ -126,7 +131,7 @@ router.get("/search/:search", async (req, res) => {
 router.get("/:listingId", async (req, res) => {
   try {
     const { listingId } = req.params;
-    const listing = await Listing.findById(listingId).populate("creator");
+    const listing = await Listing.findById(listingId).populate(creatorPopulate);
     res.status(202).json(listing);
   } catch (err) {
     res

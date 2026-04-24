@@ -71,6 +71,7 @@ router.post("/login", async (req, res) => {
       path: "wishList",
       populate: {
         path: "creator",
+        select: "-password",
       },
     });
     if (!user) {

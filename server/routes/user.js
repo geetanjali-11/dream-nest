@@ -5,11 +5,23 @@ const User = require("../models/User");
 const Listing = require("../models/Listing");
 const { requireAuth, requireUserMatch } = require("../middleware/auth");
 
+const bookingPopulate = [
+  { path: "customerId", select: "-password" },
+  { path: "hostId", select: "-password" },
+  {
+    path: "listingId",
+    populate: {
+      path: "creator",
+      select: "-password",
+    },
+  },
+];
+
 /* GET TRIP LIST */
 router.get("/:userId/trips", requireAuth, requireUserMatch, async (req, res) => {
   try {
     const { userId } = req.params;
-    const trips = await Booking.find({ customerId: userId }).populate("customerId hostId listingId");
+    const trips = await Booking.find({ customerId: userId }).populate(bookingPopulate);
     res.status(202).json(trips);
   } catch (err) {
     console.log(err);
@@ -22,7 +34,10 @@ router.patch("/:userId/:listingId", requireAuth, requireUserMatch, async (req, r
   try {
     const { userId, listingId } = req.params;
     const user = await User.findById(userId);
-    const listing = await Listing.findById(listingId).populate("creator");
+    const listing = await Listing.findById(listingId).populate({
+      path: "creator",
+      select: "-password",
+    });
 
     if (!user || !listing) {
       return res.status(404).json({ message: "User or listing not found." });
@@ -37,6 +52,7 @@ router.patch("/:userId/:listingId", requireAuth, requireUserMatch, async (req, r
         path: "wishList",
         populate: {
           path: "creator",
+          select: "-password",
         },
       });
       res.status(200).json({ message: "Listing is removed from wish list", wishList: updatedUser.wishList });
@@ -47,6 +63,7 @@ router.patch("/:userId/:listingId", requireAuth, requireUserMatch, async (req, r
         path: "wishList",
         populate: {
           path: "creator",
+          select: "-password",
         },
       });
       res.status(200).json({ message: "Listing is added to wish list", wishList: updatedUser.wishList });
@@ -76,7 +93,7 @@ router.get("/:userId/reservations", requireAuth, requireUserMatch, async (req, r
   try {
     const { userId } = req.params;
     const reservations = await Booking.find({ hostId: userId }).populate(
-      "customerId hostId listingId"
+      bookingPopulate
     );
     res.status(202).json(reservations);
   } catch (err) {
